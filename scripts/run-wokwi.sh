@@ -5,11 +5,11 @@ set -e
 BUILD_MODE=""
 case "$1" in
 "" | "release")
-    bash scripts/build.sh
+    bash scripts/build.sh "" $2 $3
     BUILD_MODE="release"
     ;;
 "debug")
-    bash scripts/build.sh debug
+    bash scripts/build.sh debug $2
     BUILD_MODE="debug"
     ;;
 *)
@@ -30,7 +30,7 @@ export ESP_ARCH=riscv32imac-unknown-none-elf
 
 # TODO: Update with your Wokwi Project
 if [ "${WOKWI_PROJECT_ID}" == "" ]; then
-    echo ${WOKWI_PROJECT_ID} && wokwi-server --chip esp32c3 target/${ESP_ARCH}/${BUILD_MODE}/esp32_c3_examples
+     wokwi-server --chip esp32c3 target/${ESP_ARCH}/${BUILD_MODE}/examples/$2
 else
-    echo ${WOKWI_PROJECT_ID} && wokwi-server --chip esp32c3 --id ${WOKWI_PROJECT_ID} target/${ESP_ARCH}/${BUILD_MODE}/esp32_c3_examples
+    wokwi-server --chip esp32c3 --id ${WOKWI_PROJECT_ID} target/${ESP_ARCH}/${BUILD_MODE}/examples/$2
 fi

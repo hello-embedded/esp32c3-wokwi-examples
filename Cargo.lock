@@ -12,6 +12,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "autocfg"
+version = "1.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d468802bab17cbc0cc575e9b053f41e72aa36bfa6b7f55e3529ffa43161b97fa"
+
+[[package]]
+name = "az"
+version = "1.2.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7b7e4c2464d97fe331d41de9d5db0def0a96f4d823b8b32a2efd503578988973"
+
+[[package]]
 name = "bare-metal"
 version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -22,6 +34,24 @@ name = "bit_field"
 version = "0.10.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "dcb6dd1c2376d2e096796e234a70e17e94cc2d5d54ff8ce42b28cef1d0d359a4"
+
+[[package]]
+name = "byte-slice-cast"
+version = "0.3.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b0a5e3906bcbf133e33c1d4d95afc664ad37fbdb9f6568d8043e7ea8c27d93d3"
+
+[[package]]
+name = "bytemuck"
+version = "1.12.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2f5715e491b5a1598fc2bef5a606847b5dc1d48ea625bd3c02c00de8285591da"
+
+[[package]]
+name = "byteorder"
+version = "1.4.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "14c189c53d098945499cdfa7ecc63567cf3886b3332b312a5b4585d8d3a6a610"
 
 [[package]]
 name = "cfg-if"
@@ -71,6 +101,65 @@ dependencies = [
 ]
 
 [[package]]
+name = "display-interface"
+version = "0.4.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7517c040926d7b02b111884aa089177db80878533127f7c1b480d852c5fb4112"
+
+[[package]]
+name = "display-interface-i2c"
+version = "0.4.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4895cd4e54e5536ef370d7f1eec787aad8275dd8ad15815aebfa71dd847b4ebf"
+dependencies = [
+ "display-interface",
+ "embedded-hal 0.2.7",
+]
+
+[[package]]
+name = "display-interface-spi"
+version = "0.4.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "489378ad054862146fbd1f09f51d585ccbe4bd1e2feadcda2a13ac33f840e1a5"
+dependencies = [
+ "byte-slice-cast",
+ "display-interface",
+ "embedded-hal 0.2.7",
+]
+
+[[package]]
+name = "embedded-dma"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "994f7e5b5cb23521c22304927195f236813053eb9c065dd2226a32ba64695446"
+dependencies = [
+ "stable_deref_trait",
+]
+
+[[package]]
+name = "embedded-graphics"
+version = "0.7.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "750082c65094fbcc4baf9ba31583ce9a8bb7f52cadfb96f6164b1bc7f922f32b"
+dependencies = [
+ "az",
+ "byteorder",
+ "embedded-graphics-core",
+ "float-cmp",
+ "micromath",
+]
+
+[[package]]
+name = "embedded-graphics-core"
+version = "0.3.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b8b1239db5f3eeb7e33e35bd10bd014e7b2537b17e071f726a09351431337cfa"
+dependencies = [
+ "az",
+ "byteorder",
+]
+
+[[package]]
 name = "embedded-hal"
 version = "0.2.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -91,12 +180,12 @@ dependencies = [
 
 [[package]]
 name = "esp-backtrace"
-version = "0.2.0"
+version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1cc04e4a62fe7905eab18e12715feaded6cb51a5a878a0c067bbe29436bad96a"
+checksum = "857b0ab2194767e4354c607b980b00a3f507659a3b793245144a992f3d81673f"
 dependencies = [
- "esp-println 0.2.2",
- "riscv",
+ "esp-println",
+ "riscv 0.8.0",
 ]
 
 [[package]]
@@ -108,13 +197,33 @@ dependencies = [
  "cfg-if",
  "critical-section",
  "embedded-hal 0.2.7",
- "esp-hal-procmacros",
+ "esp-hal-procmacros 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "esp32c3",
  "fugit",
  "nb 1.0.0",
  "paste",
- "riscv",
- "riscv-atomic-emulation-trap",
+ "riscv 0.8.0",
+ "riscv-atomic-emulation-trap 0.1.1",
+ "void",
+]
+
+[[package]]
+name = "esp-hal-common"
+version = "0.2.0"
+source = "git+https://github.com/esp-rs/esp-hal.git#d6f26428a1424d3aca7cca617509ed8a35e89a32"
+dependencies = [
+ "cfg-if",
+ "critical-section",
+ "embedded-dma",
+ "embedded-hal 0.2.7",
+ "esp-hal-procmacros 0.1.0 (git+https://github.com/esp-rs/esp-hal.git)",
+ "esp32c3",
+ "fugit",
+ "nb 1.0.0",
+ "paste",
+ "riscv 0.9.0",
+ "riscv-atomic-emulation-trap 0.2.0",
+ "smart-leds-trait",
  "void",
 ]
 
@@ -132,10 +241,16 @@ dependencies = [
 ]
 
 [[package]]
-name = "esp-println"
-version = "0.2.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "dab33baae57ce7c0869c32885ff136f9c8405e0c201d039ccd767c3e7f79502b"
+name = "esp-hal-procmacros"
+version = "0.1.0"
+source = "git+https://github.com/esp-rs/esp-hal.git#d6f26428a1424d3aca7cca617509ed8a35e89a32"
+dependencies = [
+ "darling",
+ "proc-macro-error",
+ "proc-macro2",
+ "quote",
+ "syn",
+]
 
 [[package]]
 name = "esp-println"
@@ -147,10 +262,15 @@ checksum = "adcfe5d532cf2029b11996cab6b4af948f41c24b131c76422115634711549aaa"
 name = "esp32_c3_examples"
 version = "0.1.0"
 dependencies = [
+ "embedded-graphics",
  "esp-backtrace",
- "esp-println 0.3.1",
+ "esp-hal-common 0.2.0 (git+https://github.com/esp-rs/esp-hal.git)",
+ "esp-println",
  "esp32c3-hal",
+ "max7219-driver",
  "riscv-rt",
+ "smart-leds",
+ "ssd1306",
 ]
 
 [[package]]
@@ -160,7 +280,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "cc0e61897c90cfc713243af3d7fab2a7615669faf1652bd3718a1172012b1a02"
 dependencies = [
  "bare-metal",
- "riscv",
+ "riscv 0.8.0",
  "riscv-rt",
  "vcell",
 ]
@@ -173,10 +293,19 @@ checksum = "d8468c747a18ab43bf80889ecf24c3a190421434fef4d70eaff3a49ffd67cde4"
 dependencies = [
  "embedded-hal 0.2.7",
  "embedded-hal 1.0.0-alpha.8",
- "esp-hal-common",
+ "esp-hal-common 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "r0",
- "riscv",
+ "riscv 0.8.0",
  "riscv-rt",
+]
+
+[[package]]
+name = "float-cmp"
+version = "0.8.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e1267f4ac4f343772758f7b1bdcbe767c218bbab93bb432acbf5162bbf85a6c4"
+dependencies = [
+ "num-traits",
 ]
 
 [[package]]
@@ -216,10 +345,24 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e2abad23fbc42b3700f2f279844dc832adb2b2eb069b2df918f455c4e18cc646"
 
 [[package]]
+name = "max7219-driver"
+version = "0.1.0"
+source = "git+https://github.com/hello-embedded/max7219-driver.git#44ff4b680cc472142193dceb876f284c8c647728"
+dependencies = [
+ "embedded-hal 0.2.7",
+]
+
+[[package]]
 name = "memchr"
 version = "2.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2dffe52ecf27772e601905b7522cb4ef790d2cc203488bbd0e2fe85fcb74566d"
+
+[[package]]
+name = "micromath"
+version = "1.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "bc4010833aea396656c2f91ee704d51a6f1329ec2ab56ffd00bfd56f7481ea94"
 
 [[package]]
 name = "nb"
@@ -235,6 +378,15 @@ name = "nb"
 version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "546c37ac5d9e56f55e73b677106873d9d9f5190605e41a856503623648488cae"
+
+[[package]]
+name = "num-traits"
+version = "0.2.15"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "578ede34cf02f8924ab9447f50c28075b4d3e5b269972345e7e0372b38c6cdcd"
+dependencies = [
+ "autocfg",
+]
 
 [[package]]
 name = "paste"
@@ -308,10 +460,30 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a3f87b73ce11b1619a3c6332f45341e0047173771e8b8b73f87bfeefb7b56244"
 
 [[package]]
+name = "rgb"
+version = "0.8.34"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3603b7d71ca82644f79b5a06d1220e9a58ede60bd32255f698cb1af8838b8db3"
+dependencies = [
+ "bytemuck",
+]
+
+[[package]]
 name = "riscv"
 version = "0.8.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5e2856a701069e2d262b264750d382407d272d5527f7a51d3777d1805b4e2d3c"
+dependencies = [
+ "bare-metal",
+ "bit_field",
+ "embedded-hal 0.2.7",
+]
+
+[[package]]
+name = "riscv"
+version = "0.9.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "73fc4bc7113424814738fe79755a5764e392b3d4d1bc757e6aa6f61cede32095"
 dependencies = [
  "bare-metal",
  "bit_field",
@@ -324,7 +496,18 @@ version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4daa6e1007782fb8d56cf8c39fd97cfdbca77004ef6eadb884c7e11603bc8313"
 dependencies = [
- "riscv",
+ "riscv 0.8.0",
+ "riscv-rt",
+ "riscv-target",
+]
+
+[[package]]
+name = "riscv-atomic-emulation-trap"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c14f171f5b52a5608b55b027aa5557e190b1bb47764a293cd7d48bfb418ab009"
+dependencies = [
+ "riscv 0.8.0",
  "riscv-rt",
  "riscv-target",
 ]
@@ -336,7 +519,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "527ddfacbbfeed89256163c2655b0392c4aa76dd95c0189dc05044bf2c47c3f8"
 dependencies = [
  "r0",
- "riscv",
+ "riscv 0.8.0",
  "riscv-rt-macros",
  "riscv-target",
 ]
@@ -361,6 +544,43 @@ dependencies = [
  "lazy_static",
  "regex",
 ]
+
+[[package]]
+name = "smart-leds"
+version = "0.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "38dd45fa275f70b4110eac5f5182611ad384f88bb22b68b9a9c3cafd7015290b"
+dependencies = [
+ "smart-leds-trait",
+]
+
+[[package]]
+name = "smart-leds-trait"
+version = "0.2.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ebf6d833fa93f16a1c1874e62c2aebe8567e5bdd436d59bf543ed258b6f7a8e3"
+dependencies = [
+ "rgb",
+]
+
+[[package]]
+name = "ssd1306"
+version = "0.7.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f066d5458b0a27d938dd2b71a8b397d88c5776cb316b8a39f19ef49b6d290709"
+dependencies = [
+ "display-interface",
+ "display-interface-i2c",
+ "display-interface-spi",
+ "embedded-graphics-core",
+ "embedded-hal 0.2.7",
+]
+
+[[package]]
+name = "stable_deref_trait"
+version = "1.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a8f112729512f8e442d81f95a8a7ddf2b7c6b8a1a6f509a95864142b30cab2d3"
 
 [[package]]
 name = "strsim"

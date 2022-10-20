@@ -13,8 +13,7 @@ fn main() -> ! {
     let system = peripherals.SYSTEM.split();
     let clocks = ClockControl::boot_defaults(system.clock_control).freeze();
 
-    // Disable the watchdog timers. For the ESP32-C3, this includes the Super WDT,
-    // the RTC WDT, and the TIMG WDTs.
+    // Disable the RTC and TIMG watchdog timers
     let mut rtc = Rtc::new(peripherals.RTC_CNTL);
     let timer_group0 = TimerGroup::new(peripherals.TIMG0, &clocks);
     let mut wdt0 = timer_group0.wdt;
@@ -26,18 +25,19 @@ fn main() -> ! {
     wdt0.disable();
     wdt1.disable();
 
-    // Set GPIO5 as an output, and set its state high initially.
+    // Set led as an output, switch as input
     let io = IO::new(peripherals.GPIO, peripherals.IO_MUX);
-    let mut led = io.pins.gpio4.into_push_pull_output();
+    let mut led = io.pins.gpio10.into_push_pull_output();
+    let switch = io.pins.gpio1.into_pull_up_input();
 
-    led.set_high().unwrap();
-
-    // Initialize the Delay peripheral, and use it to toggle the LED state in a
-    // loop.
     let mut delay = Delay::new(&clocks);
-    println!("hello esp32-c3 from blinky!");
+    println!("hello button!");
     loop {
-        led.toggle().unwrap();
-        delay.delay_ms(500u32);
+        if switch.is_low().unwrap() {
+            led.set_high().unwrap();
+        } else {
+            led.set_low().unwrap();
+        }
+        delay.delay_ms(500_u32);
     }
 }

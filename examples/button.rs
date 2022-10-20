@@ -1,8 +1,9 @@
 #![no_std]
 #![no_main]
 
-use esp32c3_hal::{clock::ClockControl, pac::Peripherals, prelude::*, timer::TimerGroup, Rtc};
+use esp32c3_hal::{clock::ClockControl, pac::Peripherals, prelude::*, timer::TimerGroup, Rtc, IO};
 use esp_backtrace as _;
+use esp_println::println;
 
 #[riscv_rt::entry]
 fn main() -> ! {
@@ -22,5 +23,17 @@ fn main() -> ! {
     wdt0.disable();
     wdt1.disable();
 
-    loop {}
+    // Set led as an output, button as input
+    let io = IO::new(peripherals.GPIO, peripherals.IO_MUX);
+    let mut led = io.pins.gpio10.into_push_pull_output();
+    let button = io.pins.gpio3.into_pull_up_input();
+
+    println!("hello button!");
+    loop {
+        if button.is_low().unwrap() {
+            led.set_high().unwrap();
+        } else {
+            led.set_low().unwrap();
+        }
+    }
 }
