@@ -23,3 +23,7 @@
   - `make run mode=switch`
 - [ssd1306 oled 显示屏](https://docs.wokwi.com/parts/board-ssd1306)
   - `make run mode=ssd1306`
+- [dht22 温湿传感器](https://docs.wokwi.com/zh-CN/parts/wokwi-dht22)
+  - `make run mode=dht22`
+- [pir-motion-sensor 被动红外（PIR）运动传感器](https://docs.wokwi.com/zh-CN/parts/wokwi-pir-motion-sensor)
+  - `make run mode=pir`

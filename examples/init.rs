@@ -3,6 +3,7 @@
 
 use esp32c3_hal::{clock::ClockControl, pac::Peripherals, prelude::*, timer::TimerGroup, Rtc};
 use esp_backtrace as _;
+use esp_println::println;
 
 #[riscv_rt::entry]
 fn main() -> ! {
@@ -22,5 +23,6 @@ fn main() -> ! {
     wdt0.disable();
     wdt1.disable();
 
+    println!("hello init!");
     loop {}
 }
