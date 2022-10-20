@@ -86,7 +86,9 @@ fn main() -> ! {
         0b01000010,
         0b0000_0000,
     ];
-    max7219.set_display_test_mode_all(DisplayTest::DisplayTestMode);
+    max7219
+        .set_display_test_mode_all(DisplayTest::DisplayTestMode)
+        .unwrap();
     delay.delay_ms(1000_u32);
 
     println!("hello max7219!");
@@ -94,7 +96,7 @@ fn main() -> ! {
         // test write_raw
         max7219.write_raw_all(0, &z).unwrap();
         max7219.write_raw_all(1, &h).unwrap();
-        max7219.set_intensity(0, Intensity::Ratio25_32);
-        max7219.set_intensity(1, Intensity::Ratio5_32);
+        max7219.set_intensity(0, Intensity::Ratio25_32).unwrap();
+        max7219.set_intensity(1, Intensity::Ratio5_32).unwrap();
     }
 }

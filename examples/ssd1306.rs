@@ -24,7 +24,7 @@ use esp32c3_hal::{
     Delay, Rtc,
 };
 use esp_backtrace as _;
-use nb::block;
+use esp_println::println;
 use riscv_rt::entry;
 use ssd1306::{prelude::*, I2CDisplayInterface, Ssd1306};
 
@@ -36,7 +36,6 @@ fn main() -> ! {
 
     let mut rtc = Rtc::new(peripherals.RTC_CNTL);
     let timer_group0 = TimerGroup::new(peripherals.TIMG0, &clocks);
-    let mut timer0 = timer_group0.timer0;
     let mut wdt0 = timer_group0.wdt;
     let timer_group1 = TimerGroup::new(peripherals.TIMG1, &clocks);
     let mut wdt1 = timer_group1.wdt;
@@ -78,6 +77,8 @@ fn main() -> ! {
         .build();
 
     let mut delay = Delay::new(&clocks);
+
+    println!("hello ssd1306!");
     loop {
         // Fill display bufffer with a centered text with two lines (and two text
         // styles)

@@ -25,6 +25,7 @@ esp-backtrace = { version = "0.3.0", features = [
 smart-leds = "0.3.0"
 ssd1306 = "0.7.1"
 max7219-driver = { version = "0.1.0", git = "https://github.com/hello-embedded/max7219-driver.git" }
+dht-sensor = { version = "0.2.1" }
 
 [features]
 default = ["rt"]

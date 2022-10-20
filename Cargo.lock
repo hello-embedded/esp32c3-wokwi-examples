@@ -101,6 +101,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "dht-sensor"
+version = "0.2.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "74d643854f324f02daea7153ebbfec5cfcc2f395faf1c7011be65e543570de28"
+dependencies = [
+ "embedded-hal 0.2.7",
+]
+
+[[package]]
 name = "display-interface"
 version = "0.4.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -262,6 +271,7 @@ checksum = "adcfe5d532cf2029b11996cab6b4af948f41c24b131c76422115634711549aaa"
 name = "esp32_c3_examples"
 version = "0.1.0"
 dependencies = [
+ "dht-sensor",
  "embedded-graphics",
  "esp-backtrace",
  "esp-hal-common 0.2.0 (git+https://github.com/esp-rs/esp-hal.git)",
