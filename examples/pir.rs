@@ -47,6 +47,6 @@ fn main() -> ! {
                 pir_state = 0;
             }
         }
-        delay.delay_ms(1000_u32)
+        delay.delay_ms(1000_u32);
     }
 }
